@@ -1,12 +1,13 @@
-import { NextResponse } from "next/server";
+import { NextResponse, type NextRequest } from "next/server";
 
 import { handleRouteError } from "@/lib/api/handleRouteError";
 import { getDocuments, getDocumentsPage } from "@/lib/data/documents";
 
-export const GET = async (request: Request) => {
+export const dynamic = "force-dynamic";
+
+export const GET = async (request: NextRequest) => {
   try {
-    const { searchParams } = new URL(request.url);
-    const pageParam = searchParams.get("page");
+    const pageParam = request.nextUrl.searchParams.get("page");
 
     if (pageParam !== null) {
       const page = Number.parseInt(pageParam, 10);

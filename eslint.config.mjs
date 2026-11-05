@@ -57,7 +57,7 @@ const eslintConfig = defineConfig([
       "app/**/route.ts",
       "app/**/route.js",
       "app/manifest.ts",
-      "middleware.ts",
+      "proxy.ts",
       "instrumentation.ts",
       "next.config.ts",
       "postcss.config.mjs",

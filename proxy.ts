@@ -20,7 +20,7 @@ const isProtectedPath = (pathname: string) => {
   );
 };
 
-export const middleware = async (request: NextRequest) => {
+export const proxy = async (request: NextRequest) => {
   let supabaseResponse = NextResponse.next({ request });
 
   const supabase = createServerClient(

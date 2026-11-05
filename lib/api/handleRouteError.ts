@@ -2,7 +2,16 @@ import { NextResponse } from "next/server";
 
 import { AuthError, PayloadError } from "@/lib/supabase/server";
 
+const isPrerenderInterruptedError = (error: unknown) =>
+  error instanceof Error &&
+  "digest" in error &&
+  (error as Error & { digest?: string }).digest === "NEXT_PRERENDER_INTERRUPTED";
+
 export const handleRouteError = (error: unknown, fallbackMessage: string) => {
+  if (isPrerenderInterruptedError(error)) {
+    throw error;
+  }
+
   if (error instanceof AuthError) {
     return NextResponse.json({ error: error.message }, { status: 401 });
   }
