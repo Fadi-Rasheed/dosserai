@@ -57,7 +57,11 @@ const RootLayout = ({
         <link rel="stylesheet" href="/safe-area.css" />
       </head>
       <body className="flex min-h-full flex-col bg-background font-sans text-foreground selection:bg-brand/15 selection:text-foreground">
-        <SerwistProvider swUrl="/serwist/sw.js" cacheOnNavigation={false}>
+        <SerwistProvider
+          swUrl="/serwist/sw.js"
+          cacheOnNavigation={false}
+          reloadOnOnline={false}
+        >
           <QueryProvider>{children}</QueryProvider>
         </SerwistProvider>
       </body>

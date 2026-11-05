@@ -7,7 +7,7 @@ import type { NextConfig } from "next";
 const projectRoot = dirname(fileURLToPath(import.meta.url));
 
 const nextConfig: NextConfig = {
-  cacheComponents: true,
+  cacheComponents: false,
   serverExternalPackages: ["pdf-parse"],
   turbopack: {
     root: projectRoot,

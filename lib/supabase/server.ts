@@ -2,6 +2,7 @@ import "server-only";
 
 import { createServerClient } from "@supabase/ssr";
 import { createClient } from "@supabase/supabase-js";
+import { connection } from "next/server";
 import { cookies } from "next/headers";
 import { cache } from "react";
 
@@ -71,6 +72,7 @@ export const getOptionalUser = cache(async () => {
 });
 
 export const getAuthenticatedUser = async () => {
+  await connection();
   const user = await getOptionalUser();
 
   if (!user) {

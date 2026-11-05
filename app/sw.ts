@@ -32,6 +32,13 @@ const runtimeCaching: RuntimeCaching[] = [
     matcher: isAuthenticatedAppDocument,
     handler: new NetworkOnly(),
   },
+  {
+    matcher: ({ request, sameOrigin, url }) =>
+      sameOrigin &&
+      request.headers.get("RSC") === "1" &&
+      !url.pathname.startsWith("/api/"),
+    handler: new NetworkOnly(),
+  },
   ...defaultCache,
 ];
 
@@ -42,7 +49,7 @@ const serwist = new Serwist({
   },
   skipWaiting: true,
   clientsClaim: true,
-  navigationPreload: true,
+  navigationPreload: false,
   disableDevLogs: true,
   runtimeCaching,
   fallbacks: {

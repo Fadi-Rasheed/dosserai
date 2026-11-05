@@ -5,6 +5,7 @@ import {
   AppMobileHeaderLoader,
 } from "./AppMobileHeaderLoader";
 import { AppMobileNav } from "./AppMobileNav";
+import { AppMobileNavFallback } from "./AppMobileNavFallback";
 import { AppSidebar } from "./AppSidebar";
 import { AppSidebarFallback } from "./AppSidebarFallback";
 
@@ -24,7 +25,9 @@ export const AppShell = ({ children }: AppShellProps) => {
       <div className="app-shell-main-pad flex min-h-0 min-w-0 flex-1 flex-col lg:pb-0">
         {children}
       </div>
-      <AppMobileNav />
+      <Suspense fallback={<AppMobileNavFallback />}>
+        <AppMobileNav />
+      </Suspense>
     </div>
   );
 };
