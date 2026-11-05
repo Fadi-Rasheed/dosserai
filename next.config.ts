@@ -8,7 +8,7 @@ const projectRoot = dirname(fileURLToPath(import.meta.url));
 
 const nextConfig: NextConfig = {
   cacheComponents: false,
-  serverExternalPackages: ["pdf-parse"],
+  serverExternalPackages: ["pdf-parse", "@napi-rs/canvas"],
   turbopack: {
     root: projectRoot,
   },

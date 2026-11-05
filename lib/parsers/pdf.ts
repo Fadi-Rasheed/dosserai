@@ -1,9 +1,19 @@
 import "server-only";
 
-import { PDFParse } from "pdf-parse";
+// pdf-parse/worker polyfills DOMMatrix via @napi-rs/canvas and must load before pdf-parse.
+// Loaded lazily so routes that only read documents never evaluate pdf.js.
+const loadPdfParse = async () => {
+  const { CanvasFactory, getPath } = await import("pdf-parse/worker");
+  const { PDFParse } = await import("pdf-parse");
+
+  PDFParse.setWorker(getPath());
+
+  return { CanvasFactory, PDFParse };
+};
 
 export const extractPdfText = async (buffer: ArrayBuffer): Promise<string> => {
-  const parser = new PDFParse({ data: new Uint8Array(buffer) });
+  const { CanvasFactory, PDFParse } = await loadPdfParse();
+  const parser = new PDFParse({ data: new Uint8Array(buffer), CanvasFactory });
 
   try {
     const result = await parser.getText();
