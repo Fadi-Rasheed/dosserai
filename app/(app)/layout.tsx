@@ -2,8 +2,6 @@ import { type ReactNode } from "react";
 
 import { AppShell } from "@/components/layout";
 
-export const instant = false;
-
 type AppLayoutProps = {
   children: ReactNode;
 };

@@ -13,9 +13,23 @@ declare global {
 
 declare const self: WorkerGlobalScope;
 
+const authenticatedAppPaths = new Set(["/dashboard", "/chat", "/upload"]);
+
+const isAuthenticatedAppDocument = ({
+  sameOrigin,
+  url: { pathname },
+}: {
+  sameOrigin: boolean;
+  url: URL;
+}) => sameOrigin && authenticatedAppPaths.has(pathname);
+
 const runtimeCaching: RuntimeCaching[] = [
   {
     matcher: ({ sameOrigin, url }) => sameOrigin && url.pathname.startsWith("/api/"),
+    handler: new NetworkOnly(),
+  },
+  {
+    matcher: isAuthenticatedAppDocument,
     handler: new NetworkOnly(),
   },
   ...defaultCache,
