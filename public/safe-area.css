@@ -1,0 +1,11 @@
+.app-mobile-header-pad {
+  padding-top: env(safe-area-inset-top, 0px);
+}
+
+.app-mobile-nav-pad {
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+.app-shell-main-pad {
+  padding-bottom: calc(4rem + env(safe-area-inset-bottom, 0px));
+}

@@ -1,0 +1,20 @@
+---
+description: Use named imports; never namespace or default React imports
+globs: **/*.{ts,tsx,js,jsx}
+alwaysApply: true
+---
+
+# Named imports
+
+Use named imports. Do not use namespace imports (`import * as X`) or a default React import. Exception: `import classNames from "classnames"` (see CSS guidelines).
+
+```tsx
+// ❌
+import * as React from "react"
+import React from "react"
+import * as Dialog from "@base-ui/react/dialog"
+
+// ✅
+import { type ComponentProps, type ReactNode, useState } from "react"
+import { Dialog } from "@base-ui/react/dialog"
+```

@@ -1,0 +1,31 @@
+---
+description: Join Tailwind classes with classnames; no clsx, tailwind-merge, or cn()
+globs: **/*.{ts,tsx,css}
+alwaysApply: true
+---
+
+# CSS guidelines
+
+Join class names with the `classnames` package. Do not use `clsx`, `tailwind-merge`, or a `cn()` helper from `@/lib/utils`.
+
+`classnames` only default-exports the function. Use that import (this is the exception to named imports):
+
+```tsx
+import classNames from "classnames";
+
+<div className={classNames("rounded-lg bg-card", className, isActive && "ring-2")} />
+```
+
+```tsx
+// ❌
+import { clsx } from "clsx";
+import { twMerge } from "tailwind-merge";
+import { cn } from "@/lib/utils";
+className={cn("px-2", className)}
+
+// ✅
+import classNames from "classnames";
+className={classNames("px-2", className)}
+```
+
+If `npx shadcn add` generates `cn` with clsx/tailwind-merge, replace those with `classNames` from `classnames`.

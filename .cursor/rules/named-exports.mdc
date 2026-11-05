@@ -1,0 +1,36 @@
+---
+description: Export components as named arrow functions
+globs: **/*.{ts,tsx,js,jsx}
+alwaysApply: true
+---
+
+# Named exports
+
+Define components as named arrow functions at the export site. Do not use `function` declarations, trailing `export { }`, or default exports for shared components.
+
+Next.js `page.tsx`, `layout.tsx`, and route files still `export default` the page/layout component.
+
+```tsx
+// ❌
+function Label(props: ComponentProps<"label">) {
+  return <label {...props} />;
+}
+export function Label(props: ComponentProps<"label">) {
+  return <label {...props} />;
+}
+export { Label };
+export default Label;
+
+// ✅
+export const Label = (props: ComponentProps<"label">) => {
+  return <label {...props} />;
+};
+
+export const buttonVariants = cva("...");
+
+// ✅ Next.js page/layout only
+const Home = () => {
+  return <main />;
+};
+export default Home;
+```
