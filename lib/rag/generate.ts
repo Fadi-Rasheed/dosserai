@@ -27,7 +27,9 @@ export const summarizeDocument = async (
   const response = await client.chat.completions.create({
     model: GROQ_CHAT_MODEL,
     temperature: 0.2,
-    max_tokens: 256,
+    reasoning_effort: "low",
+    // gpt-oss is a reasoning model: hidden reasoning tokens count against this budget.
+    max_tokens: 1024,
     messages: [
       {
         role: "system",
@@ -41,10 +43,13 @@ export const summarizeDocument = async (
     ],
   });
 
-  const summary = response.choices[0]?.message?.content?.trim();
+  const choice = response.choices[0];
+  const summary = choice?.message?.content?.trim();
 
   if (!summary) {
-    throw new Error("Failed to generate document summary.");
+    throw new Error(
+      `Failed to generate document summary (finish_reason: ${choice?.finish_reason ?? "none"}).`,
+    );
   }
 
   return summary;
@@ -73,7 +78,8 @@ export const generateGroundedAnswer = async (
   const response = await client.chat.completions.create({
     model: GROQ_CHAT_MODEL,
     temperature: 0.2,
-    max_tokens: 1024,
+    reasoning_effort: "low",
+    max_tokens: 2048,
     messages: [
       {
         role: "system",
@@ -90,10 +96,13 @@ export const generateGroundedAnswer = async (
     ],
   });
 
-  const answer = response.choices[0]?.message?.content?.trim();
+  const choice = response.choices[0];
+  const answer = choice?.message?.content?.trim();
 
   if (!answer) {
-    throw new Error("Failed to generate answer.");
+    throw new Error(
+      `Failed to generate answer (finish_reason: ${choice?.finish_reason ?? "none"}).`,
+    );
   }
 
   console.info(

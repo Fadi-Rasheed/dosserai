@@ -1,6 +1,7 @@
 "use client";
 
-import { FileUp, Upload, X } from "lucide-react";
+import { CircleCheck, FileUp, Upload, X } from "lucide-react";
+import Link from "next/link";
 import { type ChangeEvent, type DragEvent, useRef, useState } from "react";
 import classNames from "classnames";
 
@@ -58,6 +59,7 @@ export const UploadDropzone = () => {
   const [selectedFiles, setSelectedFiles] = useState<SelectedFile[]>([]);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [uploadErrors, setUploadErrors] = useState<string[]>([]);
+  const [uploadedFilenames, setUploadedFilenames] = useState<string[]>([]);
 
   const addFiles = (files: FileList | File[]) => {
     const rejectedMessages: string[] = [];
@@ -89,6 +91,8 @@ export const UploadDropzone = () => {
     if (validFiles.length === 0) {
       return;
     }
+
+    setUploadedFilenames([]);
 
     setSelectedFiles((current) => {
       const existingIds = new Set(current.map((entry) => entry.id));
@@ -145,14 +149,17 @@ export const UploadDropzone = () => {
 
     setErrorMessage(null);
     setUploadErrors([]);
+    setUploadedFilenames([]);
 
     const failures: string[] = [];
     const succeededIds: string[] = [];
+    const succeededFilenames: string[] = [];
 
     for (const entry of selectedFiles) {
       try {
         await uploadDocument.mutateAsync(entry.file);
         succeededIds.push(entry.id);
+        succeededFilenames.push(entry.file.name);
       } catch (error) {
         const message =
           error instanceof ApiError ? error.message : "Upload failed.";
@@ -164,6 +171,7 @@ export const UploadDropzone = () => {
       setSelectedFiles((current) =>
         current.filter((entry) => !succeededIds.includes(entry.id)),
       );
+      setUploadedFilenames(succeededFilenames);
     }
 
     if (failures.length > 0) {
@@ -219,6 +227,47 @@ export const UploadDropzone = () => {
           </Button>
         </CardContent>
       </Card>
+
+      {uploadedFilenames.length > 0 ? (
+        <div
+          className="flex items-start gap-3 rounded-xl border border-success/30 bg-success/5 px-4 py-3"
+          role="status"
+        >
+          <CircleCheck
+            className="mt-0.5 size-5 shrink-0 text-success"
+            aria-hidden="true"
+          />
+          <div className="min-w-0 flex-1 space-y-1">
+            <p className="text-sm font-semibold">
+              {uploadedFilenames.length === 1
+                ? "Document uploaded successfully"
+                : `${uploadedFilenames.length} documents uploaded successfully`}
+            </p>
+            <p className="truncate text-sm text-muted-foreground">
+              {uploadedFilenames.join(", ")}
+            </p>
+            <p className="text-sm">
+              <Link href="/dashboard" className="font-medium underline">
+                View in dashboard
+              </Link>{" "}
+              or{" "}
+              <Link href="/chat" className="font-medium underline">
+                ask a question
+              </Link>
+              .
+            </p>
+          </div>
+          <Button
+            type="button"
+            variant="ghost"
+            size="icon-sm"
+            aria-label="Dismiss"
+            onClick={() => setUploadedFilenames([])}
+          >
+            <X className="size-4" aria-hidden="true" />
+          </Button>
+        </div>
+      ) : null}
 
       {selectedFiles.length > 0 ? (
         <Card className="shadow-lift">

@@ -4,6 +4,7 @@ const surface = "#f7f7f7";
 const mutedInk = "#717171";
 const brand = "#222222";
 const destructive = "#c13515";
+const success = "#008a05";
 const line = "#dddddd";
 const field = "#b0b0b0";
 const ring = "#22222259";
@@ -41,6 +42,7 @@ const config = {
         },
         brand,
         destructive,
+        success,
         border: line,
         input: field,
         ring,
