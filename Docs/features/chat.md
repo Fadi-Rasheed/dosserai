@@ -38,7 +38,7 @@ flowchart TD
   Top8 --> Context[Assemble context with filenames]
 ```
 
-- **Search:** `match_chunks` RPC scoped to `auth.uid()` (see `002_match_chunks_rpc.sql`).
+- **Search:** `match_chunks` RPC scoped to `auth.uid()` (see `001_initial_schema.sql`).
 - **Reranking:** Ensures diversity — one chunk per document per round until 8 chunks selected.
 - **No-context fallback:** Fixed message when no chunks pass the similarity threshold.
 
@@ -109,4 +109,4 @@ flowchart TB
 - `lib/data/usage.ts` — `incrementUsage`
 - `lib/queries/chat.ts`
 - `lib/api/chat.ts`
-- `supabase/migrations/002_match_chunks_rpc.sql`
+- `supabase/migrations/001_initial_schema.sql`

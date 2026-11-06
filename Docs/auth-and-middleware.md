@@ -121,4 +121,4 @@ Defense in depth:
 - `lib/auth/safeRedirect.ts`
 - `app/(auth)/login/LoginForm.tsx`
 - `components/layout/SignOutButton.tsx`
-- `supabase/migrations/003_security_hardening.sql`
+- `supabase/migrations/001_initial_schema.sql`

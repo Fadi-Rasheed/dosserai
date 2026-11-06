@@ -85,7 +85,7 @@ flowchart LR
 | Chat message writes | Service role | Same — session provides `user_id` |
 | Query usage increment | Service role RPC | Atomic daily cap in `increment_query_usage` (`p_user_id` from session) |
 
-The service role key is never exposed to the browser. RLS policies after migration `003_security_hardening.sql` block client INSERT/UPDATE on ingest-related tables.
+The service role key is never exposed to the browser. RLS policies in `001_initial_schema.sql` block client INSERT/UPDATE on ingest-related tables.
 
 ## Conventions
 
@@ -124,4 +124,4 @@ flowchart LR
 - `lib/api/routes.ts`, `lib/api/client.ts`, `lib/api/handleRouteError.ts`
 - `lib/queries/keys.ts`, `lib/queries/documents.ts`, `lib/queries/chat.ts`, `lib/queries/usage.ts`
 - `lib/supabase/server.ts`
-- `supabase/migrations/003_security_hardening.sql`
+- `supabase/migrations/001_initial_schema.sql`

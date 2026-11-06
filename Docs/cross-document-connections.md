@@ -102,4 +102,4 @@ flowchart LR
 - `components/dashboard/ConnectionGraph.tsx`
 - `components/dashboard/DocumentListItem.tsx`
 - `app/api/connections/[docId]/route.ts`
-- `supabase/migrations/003_security_hardening.sql` — same-user trigger
+- `supabase/migrations/001_initial_schema.sql` — same-user trigger

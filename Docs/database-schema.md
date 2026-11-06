@@ -73,8 +73,6 @@ Vector indexes use IVFFlat with cosine distance (`vector_cosine_ops`). Used by `
 
 ## RLS policy matrix
 
-After `003_security_hardening.sql`:
-
 | Table | Session client SELECT | Session client DELETE | Service role INSERT/UPDATE |
 | --- | --- | --- | --- |
 | `documents` | Own rows (`auth.uid() = user_id`) | Own rows | Ingest pipeline |
@@ -117,9 +115,6 @@ No object storage cleanup — original files are never persisted.
 
 ## Key files
 
-- `supabase/migrations/001_initial_schema.sql`
-- `supabase/migrations/002_match_chunks_rpc.sql`
-- `supabase/migrations/003_security_hardening.sql`
-- `supabase/migrations/004_increment_usage_service_only.sql`
+- `supabase/migrations/001_initial_schema.sql` — tables, indexes, RLS, trigger, and RPCs
 - `lib/config.ts` — `getDailyQueryLimit()`
 - `lib/data/usage.ts` — `incrementUsage()`
